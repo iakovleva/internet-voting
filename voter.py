@@ -1,21 +1,25 @@
 import sys
 import argparse
 
+def main():
 
-commands = ['register', 'verify voters', 'vote', 'verify my vote', 'verify all votes', 'count votes']
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+    parser_register = subparsers.add_parser('register')
+    parser_register.add_argument('voter_id', type=int)
+    parser_start_node = subparsers.add_parser('start-node')
+    parser_start_node.add_argument('--arguments', nargs=1)
+    parser_pull = subparsers.add_parser('pull')
+    parser_vote = subparsers.add_parser('vote')
+    parser_sign = subparsers.add_parser('sign')
+    parser_count = subparsers.add_parser('count')
+    args = parser.parse_args()
 
-def main(argv):
-	args = sys.argv.pop()
-	command_string = ' '.join(sys.argv[2:])
-	if command_string in commands:		
-		print 'id: ', sys.argv[1], 'command: ', command_string, 'args: ', args
-	else:
-		print "Unknown command. Please enter the valid command."
-
-if __name__ == "__main__":
-	   main(sys.argv[1:])
-
-#parser = argparse.ArgumentParser()
-#parser.add_argument('--arguments')
-#args = parser.parse_args()
-#print 'arguments: {}'.format(args.arguments)
+    if sys.argv[1]=='register':
+        print 'id: {}'.format(args.voter_id), 'subcommand: {}'.format(sys.argv[1])
+    elif sys.argv[1]=='start-node':
+        print 'arguments: {}'.format(args.arguments), 'subcommand: {}'.format(sys.argv[1])
+    else:
+        print 'subcommand: {}'.format(sys.argv[1])
+    
+main()
